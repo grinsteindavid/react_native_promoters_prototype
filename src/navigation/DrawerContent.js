@@ -16,7 +16,7 @@ class DrawerContent extends React.Component {
   async logout() {
     try {
       this.setState({ user: {} });
-      await AsyncStorage.removeItem('@localStore:userData');
+      await AsyncStorage.removeItem('@localStore:fbid');
       this.reset('login');
     } catch (error) {
       

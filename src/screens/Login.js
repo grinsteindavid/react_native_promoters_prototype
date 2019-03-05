@@ -22,12 +22,22 @@ export default class Login extends React.Component {
   async componentWillMount() {
     try {
       console.log('Login screen -> componentWillMount');
-      const userData = await AsyncStorage.getItem('@localStore:userData');
+      const fbid = await AsyncStorage.getItem('@localStore:fbid');
 
-      if (userData) {
-        UserService.axiosInstance.defaults.headers.post['fbid'] = userData.user.facebook.id;
-        UserService.axiosInstance.defaults.headers.post['X-Authorization'] = userData.user.AppToken;
-        UserService.getDrawer().setState(userData);
+      if (fbid) {
+        const response = await UserService.axiosInstance.get('loginPromoter', {
+          headers: {
+            fbid: fbid
+          }
+        });
+
+        UserService.axiosInstance.defaults.headers.post['fbid'] = fbid;
+        UserService.axiosInstance.defaults.headers.post['X-Authorization'] = response.data.AppToken;
+        UserService.getDrawer().setState({
+          user: {
+            ...response.data
+          }
+        });
         NavigationService.reset("Events");
       }
     } catch (error) {
@@ -56,14 +66,11 @@ export default class Login extends React.Component {
       UserService.axiosInstance.defaults.headers.post['X-Authorization'] = response.data.AppToken;
       UserService.getDrawer().setState({
         user: {
-          ...response.data,
-          facebook: facebook
+          ...response.data
         }
       });
 
-      await AsyncStorage.setItem('@localStore:userData', {
-        user: UserService.getDrawer().state.user
-      });
+      await AsyncStorage.setItem('@localStore:fbid', 'fbid');
       NavigationService.reset("Events");
     } catch (error) {
       alert(JSON.stringify(error));
@@ -74,7 +81,7 @@ export default class Login extends React.Component {
     return (
       <Root>
         <Container>
-          <View style={{ flex: 1, padding: 10 }}>
+          <View style={{ flex: 1, padding: 60 }}>
               <Image source={require('../../assets/img/atnight-logo.png')} resizeMode={'contain'} style={{width: '100%'}}/>
           </View>
           <Content padder contentContainerStyle={styles.content}>
@@ -94,6 +101,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 50
   }
 });
