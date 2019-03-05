@@ -9,7 +9,7 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: 'true'
+      loading: true
     };
 
   }
@@ -22,21 +22,14 @@ export default class Login extends React.Component {
   async componentWillMount() {
     try {
       console.log('Login screen -> componentWillMount');
-      const fbid = await AsyncStorage.getItem('@localStore:fbid');
+      const userData = await AsyncStorage.getItem('@localStore:userData');
 
-      if (fbid) {
-        const response = await UserService.axiosInstance.get('loginPromoter', {
-          headers: {
-            fbid: fbid
-          }
-        });
+      if (userData) {
 
-        UserService.axiosInstance.defaults.headers.post['fbid'] = fbid;
-        UserService.axiosInstance.defaults.headers.post['X-Authorization'] = response.data.AppToken;
+        UserService.axiosInstance.defaults.headers.post['fbid'] = JSON.parse(userData).user.facebook.id;
+        UserService.axiosInstance.defaults.headers.post['X-Authorization'] = JSON.parse(userData).user.AppToken;
         UserService.getDrawer().setState({
-          user: {
-            ...response.data
-          }
+          user: JSON.parse(userData).user
         });
         NavigationService.reset("Events");
       }
@@ -66,11 +59,17 @@ export default class Login extends React.Component {
       UserService.axiosInstance.defaults.headers.post['X-Authorization'] = response.data.AppToken;
       UserService.getDrawer().setState({
         user: {
-          ...response.data
+          ...response.data,
+          facebook: facebook
         }
       });
 
-      await AsyncStorage.setItem('@localStore:fbid', facebook.id);
+      await AsyncStorage.setItem('@localStore:userData', JSON.stringify({
+        user: {
+          ...response.data,
+          facebook: facebook
+        }
+      }));
       NavigationService.reset("Events");
     } catch (error) {
       alert(JSON.stringify(error));
