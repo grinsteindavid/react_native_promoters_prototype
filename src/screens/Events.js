@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Badge } from 'react-native-elements';
-import {Platform, StyleSheet, View, Image} from 'react-native';
+import { AsyncStorage, Platform, StyleSheet, View, Image} from 'react-native';
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
@@ -24,6 +24,7 @@ export default class Events extends React.Component {
 
   async componentWillMount() {
     try {
+      const fbid = await AsyncStorage.getItem('@localStore:fbid');
       this.loadEvents();
       
     } catch (error) {

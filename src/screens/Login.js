@@ -70,7 +70,7 @@ export default class Login extends React.Component {
         }
       });
 
-      await AsyncStorage.setItem('@localStore:fbid', 'fbid');
+      await AsyncStorage.setItem('@localStore:fbid', facebook.id);
       NavigationService.reset("Events");
     } catch (error) {
       alert(JSON.stringify(error));
