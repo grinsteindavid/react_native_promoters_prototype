@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, ScrollView, View, TouchableOpacity, ImageBackground} from 'react-native';
+import { AsyncStorage, StyleSheet, ScrollView, View, TouchableOpacity, ImageBackground} from 'react-native';
 import { Container, Header, Content, List, ListItem, Item, Input, Card, CardItem, Left, Body, Right, Thumbnail, Text, Button, Icon } from 'native-base';
 import { Image, Avatar } from 'react-native-elements';
 import { DrawerItems, SafeAreaView, NavigationActions, StackActions } from 'react-navigation';
@@ -13,9 +13,14 @@ class DrawerContent extends React.Component {
     };
   }
 
-  logout() {
-    this.setState({user: {}});
-    this.reset('login');
+  async logout() {
+    try {
+      this.setState({ user: {} });
+      await AsyncStorage.removeItem('@localStore:userData');
+      this.reset('login');
+    } catch (error) {
+      
+    }
   }
 
   reset(routeName) {

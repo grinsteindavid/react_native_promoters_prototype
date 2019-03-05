@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Linking, Image } from 'react-native';
+import { StyleSheet, View, Linking, Image, AsyncStorage } from 'react-native';
 import { Root, Container, Toast, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Fab, Accordion, Card, CardItem} from 'native-base';
 import FacebookLoginButton from '../components/FacebookLoginButton';
 import NavigationService from '../services/NavigationService';
@@ -22,6 +22,14 @@ export default class Login extends React.Component {
   async componentWillMount() {
     try {
       console.log('Login screen -> componentWillMount');
+      const userData = await AsyncStorage.getItem('@localStore:userData');
+
+      if (userData) {
+        UserService.axiosInstance.defaults.headers.post['fbid'] = userData.user.facebook.id;
+        UserService.axiosInstance.defaults.headers.post['X-Authorization'] = userData.user.AppToken;
+        UserService.getDrawer().setState(userData);
+        NavigationService.reset("Events");
+      }
     } catch (error) {
       
     }
@@ -51,6 +59,10 @@ export default class Login extends React.Component {
           ...response.data,
           facebook: facebook
         }
+      });
+
+      await AsyncStorage.setItem('@localStore:userData', {
+        user: UserService.getDrawer().state.user
       });
       NavigationService.reset("Events");
     } catch (error) {

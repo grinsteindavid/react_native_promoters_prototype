@@ -10,10 +10,16 @@ export default class SendInvitation extends React.Component {
     super(props)
     this.state = {
       loading: false,
-      event: this.props.navigation.getParam('event'),
+      event: this.props.navigation.getParam('event') || {
+        campaign: {
+          rating: true,
+          gender: true,
+          charge: true
+        }
+      },
       user: {
         phone: '',
-        rating: 7,
+        rating: 5,
         gender: null,
         charge: null
       }
@@ -118,10 +124,10 @@ export default class SendInvitation extends React.Component {
   }
 
   renderGender() {
-    if (this.state.event.campaign.gender) {
+    if (this.state.event && this.state.event.campaign.gender) {
       return (
-        <View>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
+        <>
+          <View style={{ flex: 1, flexDirection: 'row', padding: 15 }}>
             <View style={{ flex: 1 }}>
               <Text>Gender</Text>
             </View>
@@ -143,16 +149,16 @@ export default class SendInvitation extends React.Component {
             </View>
           </View>
           <Divider style={{ backgroundColor: 'gray' }} />
-        </View>
+        </>
       )
     }
   }
 
   renderCharge() {
-    if (this.state.event.campaign.charge) {
+    if (this.state.event && this.state.event.campaign.charge) {
       return (
-        <View>
-          <View style={{ flex: 1, flexDirection: 'row', }}>
+        <>
+          <View style={{ flex: 1, flexDirection: 'row', padding: 15}}>
             <View style={{ flex: 1 }}>
               <Text>Charge?</Text>
             </View>
@@ -174,35 +180,35 @@ export default class SendInvitation extends React.Component {
             </View>
           </View>
           <Divider style={{ backgroundColor: 'gray' }} />
-        </View>
+        </>
       )
     }
   }
 
   renderRating() {
-    if (this.state.event.campaign.rating) {
+    if (this.state.event && this.state.event.campaign.rating) {
       return (
-        <View>
-          <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
-            <View style={{ flex: 1 }}>
-              <Button light style={{ padding: 0, margin: 0 }} onPress={() => this.ratingMinus()}>
+        <>
+          <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', padding: 30 }}>
+            <View style={{ width: 60, height: 50 }}>
+              <Button primary onPress={() => this.ratingMinus()}>
                 <Icon name="minus-circle" type="FontAwesome" />
               </Button>
             </View>
-            <View style={{ flex: 1 }}>
-              <Button transparent style={{ padding: 0, margin: 0 }}>
+            <View style={{ width: 120, height: 50 }}>
+              <Button transparent>
                 <Icon name="star" type="FontAwesome" />
-                <Text>{this.state.user.rating}</Text>
+                <Text style={{ fontSize: 30 }}>{this.state.user.rating}</Text>
               </Button>
             </View>
-            <View style={{ flex: 1 }}>
-              <Button light style={{ padding: 0, margin: 0 }} onPress={() => this.ratingPlus()}>
+            <View style={{ width: 60, height: 50 }}>
+              <Button primary onPress={() => this.ratingPlus()}>
                 <Icon name="plus-circle" type="FontAwesome" />
               </Button>
             </View>
           </View>
           <Divider style={{ backgroundColor: 'gray' }} />
-        </View>
+        </>
       )
     }
   }
@@ -214,7 +220,7 @@ export default class SendInvitation extends React.Component {
           <Content padder>
             <Form>
 
-              <View style={{ flex: 1, flexDirection: 'row'}}>
+              <View style={{ flex: 1, flexDirection: 'row', padding: 15 }}>
                 <View style={{ flex: 1 }}>
                   <Icon name="phone-square" type="FontAwesome" />
                 </View>

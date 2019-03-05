@@ -25,6 +25,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "description": "",
+    "githubUrl": "https://github.com/grinsteindavid/react_native_promo_app.git"
   }
 }
