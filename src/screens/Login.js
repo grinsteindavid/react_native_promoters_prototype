@@ -22,10 +22,9 @@ export default class Login extends React.Component {
   async componentWillMount() {
     try {
       console.log('Login screen -> componentWillMount');
-      const userData = await AsyncStorage.getItem('@localStore:userData');
+      const userData = await AsyncStorage.getItem('userData');
 
       if (userData) {
-
         UserService.axiosInstance.defaults.headers.post['fbid'] = JSON.parse(userData).user.facebook.id;
         UserService.axiosInstance.defaults.headers.post['X-Authorization'] = JSON.parse(userData).user.AppToken;
         UserService.getDrawer().setState({
@@ -64,7 +63,7 @@ export default class Login extends React.Component {
         }
       });
 
-      await AsyncStorage.setItem('@localStore:userData', JSON.stringify({
+      await AsyncStorage.setItem('userData', JSON.stringify({
         user: {
           ...response.data,
           facebook: facebook
@@ -81,7 +80,11 @@ export default class Login extends React.Component {
       <Root>
         <Container>
           <View style={{ flex: 1, padding: 60 }}>
-              <Image source={require('../../assets/img/atnight-logo.png')} resizeMode={'contain'} style={{width: '100%'}}/>
+              <Image 
+                source={require('../../assets/img/atnight-logo.png')} 
+                resizeMode={'contain'} 
+                style={{ width: '100%' }}
+              />
           </View>
           <Content padder contentContainerStyle={styles.content}>
             <FacebookLoginButton onLoginFinished={this.loginFinished}/>

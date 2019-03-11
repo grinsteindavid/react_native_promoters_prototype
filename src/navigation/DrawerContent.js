@@ -13,23 +13,22 @@ class DrawerContent extends React.Component {
     };
   }
 
-  async logout() {
-    try {
-      this.setState({ user: {} });
-      await AsyncStorage.removeItem('@localStore:userData');
-      this.reset('login');
-    } catch (error) {
-      
-    }
-  }
+  async reset(routeName) {
+      try {
+        if (routeName === 'Login') {
+          await AsyncStorage.clear();
+          this.setState({ user: {} });
+        }
 
-  reset(routeName) {
-      this.props.navigation.dispatch(
-        StackActions.reset({
+        this.props.navigation.dispatch(
+          StackActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({ routeName: routeName })]
-        })
-      );
+          })
+        );
+      } catch (error) {
+        
+      }
     }
 
   render () {
@@ -68,9 +67,7 @@ class DrawerContent extends React.Component {
             {
               routes.map((route, index) => {
                 return (
-                  <TouchableOpacity
-                    key={index}
-                  >
+                  <TouchableOpacity key={index}>
                     <Item onPress={() => this.reset(route.name)} style={route.name === currentRoute ? styles.drawerItemActive : styles.drawerItem}>
                       <Icon name={route.icon} style={{ margin: 20, marginRight: 30, color: '#606060' }} type={route.iconType} />
                       <Text>{route.title}</Text>

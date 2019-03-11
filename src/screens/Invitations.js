@@ -20,7 +20,7 @@ export default class Invitations extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Invitations',
     headerRight: <MenuButton navigation={navigation}/>,
-    headerStyle: { backgroundColor: 'black' },
+    headerStyle: { backgroundColor: 'black', height: 80 },
     headerTintColor: '#fff'
   });
 

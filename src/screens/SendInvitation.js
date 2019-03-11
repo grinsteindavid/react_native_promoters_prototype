@@ -28,7 +28,7 @@ export default class SendInvitation extends React.Component {
 
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Invite',
-    headerStyle: { backgroundColor: 'black' },
+    headerStyle: { backgroundColor: 'black', height: 80 },
     headerTintColor: '#fff'
   });
 

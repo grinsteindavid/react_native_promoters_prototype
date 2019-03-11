@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Badge } from 'react-native-elements';
 import { AsyncStorage, Platform, StyleSheet, View, Image} from 'react-native';
-import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon } from 'native-base';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import MenuButton from '../components/MenuButton';
@@ -18,7 +18,7 @@ export default class Events extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: `${navigation.state.routeName}`,
     headerRight: <MenuButton navigation={navigation}/>,
-    headerStyle: { backgroundColor: 'black' },
+    headerStyle: { backgroundColor: 'black', height: 80 },
     headerTintColor: '#fff'
   });
 
@@ -41,12 +41,24 @@ export default class Events extends React.Component {
     }
   }
 
+  renderAlert() {
+    if (!this.state.events.length) {
+      return (
+        <Button full danger iconLeft>
+          <Icon name="warning" type="FontAwesome" />
+          <Text>Sorry, there are no campaigns available.</Text>
+        </Button>
+      );
+    }
+  }
+
   render() {
     return (
       <Container>
         <NavigationEvents
           onWillFocus={payload => this.loadEvents()}
-        />       
+        />
+        { this.renderAlert() }      
         <Content padder>
           <List>
             {
