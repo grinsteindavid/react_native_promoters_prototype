@@ -20,7 +20,7 @@ export default class SendCustomer extends React.Component {
   }
 
   static navigationOptions = ({ navigation, screenProps }) => ({
-    title: 'Invite',
+    title: 'New Customer',
     headerStyle: { backgroundColor: 'black', height: 80 },
     headerTintColor: '#fff'
   });
@@ -69,7 +69,7 @@ export default class SendCustomer extends React.Component {
       });
 
       Toast.show({
-        text: 'Guest successfully created!',
+        text: 'Success!',
         position: 'bottom',
         type: 'success',
         duration: 2000
