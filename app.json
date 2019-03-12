@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Atnight promo v2",
-    "slug": "atnight-promo-v2",
+    "name": "Atnight promo",
+    "slug": "atnight-promo",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
