@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Atnight promo",
-    "slug": "atnight-promo",
+    "name": "Atnight promo v3",
+    "slug": "atnight-promo-v3",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -27,5 +27,17 @@
     },
     "description": "",
     "githubUrl": "https://github.com/grinsteindavid/react_native_promo_app.git"
+  },
+  "hooks": {
+    "postPublish": [
+      {
+        "file": "sentry-expo/upload-sourcemaps",
+        "config": {
+          "organization": "",
+          "project": "expo-atight",
+          "authToken": "f1e96eae430f4080a572e29e9f279105b532f6be63bd49eab281bd234a1bcd37"
+        }
+      }
+    ]
   }
 }

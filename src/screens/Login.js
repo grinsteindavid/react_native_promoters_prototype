@@ -1,4 +1,5 @@
 import React from 'react';
+import Sentry from 'sentry-expo';
 import { StyleSheet, View, Linking, Image, AsyncStorage } from 'react-native';
 import { Root, Container, Toast, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Fab, Accordion, Card, CardItem} from 'native-base';
 import FacebookLoginButton from '../components/FacebookLoginButton';
@@ -11,7 +12,6 @@ export default class Login extends React.Component {
     this.state = {
       loading: true
     };
-
   }
 
   static navigationOptions = {
@@ -33,7 +33,8 @@ export default class Login extends React.Component {
         NavigationService.reset("Events");
       }
     } catch (error) {
-      
+      Sentry.captureException(new Error(JSON.stringify(error)));
+      alert(JSON.stringify(error));
     }
        
   }
@@ -42,12 +43,14 @@ export default class Login extends React.Component {
     try {
       console.log('Login screen -> componentDidMount');
     } catch (error) {
-      
+      alert(JSON.stringify(error));
+      Sentry.captureException(new Error(JSON.stringify(error)));
     }
   }
 
   async loginFinished(facebook) {
     try {
+
       const response = await UserService.axiosInstance.get('loginPromoter', {
         headers: {
           fbid: facebook.id
@@ -72,6 +75,7 @@ export default class Login extends React.Component {
       NavigationService.reset("Events");
     } catch (error) {
       alert(JSON.stringify(error));
+      Sentry.captureException(new Error(JSON.stringify(error)));
     }
   }
 

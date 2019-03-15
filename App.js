@@ -10,6 +10,7 @@
 import React, { Component } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Font } from 'expo';
+import Sentry from 'sentry-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
@@ -22,6 +23,7 @@ export default class App extends Component {
       isReady: false
     }
 
+    alert('v4 app');
   }
 
   async componentDidMount() {
@@ -39,6 +41,8 @@ export default class App extends Component {
     }
     
     const MainNavigation = createAppContainer(DrawerNavigator);
+    Sentry.enableInExpoDevelopment = true;
+    Sentry.config('https://7c585fd3da8d4d9eb915be109d10c34c@sentry.io/1310829').install();
 
     return (
       <MainNavigation ref={navigatorRef => {

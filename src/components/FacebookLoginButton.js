@@ -1,4 +1,5 @@
 import React from 'react';
+import Sentry from 'sentry-expo';
 import { StyleSheet, View } from 'react-native';
 import { Button, Icon, Text} from 'native-base';
 import { Facebook } from 'expo';
@@ -34,6 +35,7 @@ export default class FacebookLoginButton extends React.Component {
       }
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
+      Sentry.captureException(new Error(JSON.stringify(message)));
     }
   }
 
