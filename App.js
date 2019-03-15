@@ -23,7 +23,7 @@ export default class App extends Component {
       isReady: false
     }
 
-    alert('v4 app');
+    alert('v5 app');
   }
 
   async componentDidMount() {

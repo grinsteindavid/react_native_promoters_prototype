@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Atnight promo v3",
-    "slug": "atnight-promo-v3",
+    "name": "Atnight promo v4",
+    "slug": "atnight-promo-v4",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -28,6 +28,8 @@
     "description": "",
     "githubUrl": "https://github.com/grinsteindavid/react_native_promo_app.git"
   },
+  "facebookAppId": "1668467996513766",
+  "facebookDisplayName": "Atnight Staff Admin",
   "hooks": {
     "postPublish": [
       {

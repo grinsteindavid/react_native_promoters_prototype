@@ -19,6 +19,7 @@ export default class FacebookLoginButton extends React.Component {
         declinedPermissions,
       } = await Facebook.logInWithReadPermissionsAsync('1668467996513766', {
         permissions: ['public_profile'],
+        behavior: 'web'
       });
       
       if (type === 'success') {
